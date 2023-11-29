@@ -1,0 +1,20 @@
+C tl=88.92DkkPHour
+|
+T Annas løn for de 24 timer:
+C l=(tl*24Hour)/2: efter 24 timer
+T hejsa
+|
+T Annas løn efter AM bidrag:
+C l*(d=(1-0.08): del af løn Anna får)
+|
+T Antal timer Anna skal arbejde for at tjæne 2.500 kr:
+C 2500Dkk/(tl*d: efter AM bidrag)
+|
+T Antal timer Anna skal arbejde om ugen for at tjæne 35.300 kr om året:
+C (35300Dkk/52Week)/tl
+|
+T Leas grydelapper
+C (3Purchases*89Dkk+sum(5, 2)Dkk: som Lea vil tjæne)/((3Purchases*10Garn*50Gram: stof i alt)/120GramPLap)
+|
+T Her er et billede:
+I Fox512.png
