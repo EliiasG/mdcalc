@@ -2,6 +2,8 @@ package syntax
 
 import (
 	"strings"
+
+	"github.com/eliiasg/mdcalc/util"
 )
 
 type Token interface {
@@ -78,8 +80,8 @@ func Tokenize(prgm string) []Token {
 		handleComma(state, c)
 		// single responsibility principle in action
 		handleParenthesesAndComments(state, c)
-		state.wasNum = isNum(c)
-		state.wasAlpha = isAlpha(c)
+		state.wasNum = util.IsNum(c)
+		state.wasAlpha = util.IsAlpha(c)
 	}
 	return state.res
 }
@@ -106,7 +108,7 @@ func handleVarAssign(s *tokenizerState, c rune) {
 }
 
 func handleOperators(s *tokenizerState, c rune) {
-	if !s.readyForUnit || c == ' ' || c == '=' || c == ')' || c == ':' || c == ',' || isAlpha(c) {
+	if !s.readyForUnit || c == ' ' || c == '=' || c == ')' || c == ':' || c == ',' || util.IsAlpha(c) {
 		return
 	}
 	switch t := s.res[len(s.res)-1].(type) {
@@ -154,9 +156,9 @@ func handleVarRef(s *tokenizerState, c rune) {
 	if s.readyForUnit || s.handlingComment {
 		return
 	}
-	if isAlpha(c) {
+	if util.IsAlpha(c) {
 		s.curRes.WriteRune(c)
-	} else if s.curRes.Len() > 0 && c != '(' && !isNum(c) {
+	} else if s.curRes.Len() > 0 && c != '(' && !util.IsNum(c) {
 		s.res = append(s.res, TokenLiteral{Value: s.curRes.String()})
 		s.curRes.Reset()
 		s.readyForUnit = true
@@ -167,7 +169,7 @@ func handleUnit(s *tokenizerState, c rune) {
 	if !s.readyForUnit || s.handlingComment {
 		return
 	}
-	if isAlpha(c) {
+	if util.IsAlpha(c) {
 		s.curRes.WriteRune(c)
 	} else if s.wasAlpha {
 		s.res = append(s.res, TokenUnit{Name: s.curRes.String()})
@@ -179,7 +181,7 @@ func handleNum(s *tokenizerState, c rune) {
 	if s.handlingComment {
 		return
 	}
-	num := isNum(c)
+	num := util.IsNum(c)
 	if num {
 		s.readyForUnit = false
 		s.curRes.WriteRune(c)
@@ -191,10 +193,3 @@ func handleNum(s *tokenizerState, c rune) {
 }
 
 // numeric or .
-func isNum(c rune) bool {
-	return c == '.' || (c >= '0' && c <= '9')
-}
-
-func isAlpha(c rune) bool {
-	return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-}
