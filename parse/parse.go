@@ -35,7 +35,8 @@ func Parse(mdc, header, sub string) (string, error) {
 			sb.WriteString(fmt.Sprintf("![Image!](%v)", line[2:]))
 		case 'C':
 			sb.WriteString("$$\\dfrac{\\text{5746 kr. i timen}}{1}=\\text{1 kr. i timen \\textit{(efter AM bidrag)}}$$")
-			r := syntax.Tokenize(line[2 : len(line)-1])
+			r := syntax.Tokenize(strings.TrimSpace(line[2:]))
+			fmt.Println(r)
 			tree, err := syntax.GenerateAst(r)
 			if err != nil {
 				panic(err)
