@@ -19,6 +19,12 @@ func Parse(mdc, header, sub string) (string, error) {
 		if len(line) == 0 {
 			continue
 		}
+		var content string
+		if len(line) >= 3 {
+			content = strings.TrimSpace(line[2:])
+		} else {
+			content = ""
+		}
 		switch line[0] {
 		default:
 			return "", err(i, "Every line must start with either T, C or |")
@@ -30,14 +36,18 @@ func Parse(mdc, header, sub string) (string, error) {
 			if len(line) < 3 {
 				return "", err(i, "Text lines must start with a T followed by a space followed by text")
 			}
-			sb.WriteString(line[2 : len(line)-1])
+			sb.WriteString(content)
 		case 'I':
-			sb.WriteString(fmt.Sprintf("![Image!](%v)", line[2:]))
+			sb.WriteString(fmt.Sprintf("![Image!](%v)", content))
 		case 'C':
 			sb.WriteString("$$\\dfrac{\\text{5746 kr. i timen}}{1}=\\text{1 kr. i timen \\textit{(efter AM bidrag)}}$$")
-			r := syntax.Tokenize(strings.TrimSpace(line[2:]))
-			fmt.Println(r)
+			r := syntax.Tokenize(content)
 			tree, err := syntax.GenerateAst(r)
+			tree = syntax.ResolveOperatorChains(tree, map[string]int{
+				"*": 1,
+				"/": 1,
+				"^": 2,
+			})
 			if err != nil {
 				panic(err)
 			}

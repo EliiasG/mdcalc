@@ -27,53 +27,33 @@ func GenerateAst(code []Token) (ASTNode, error) {
 	return resolveExpression(code)
 }
 
-func ResolveOperatorChains(n ASTNode) error {
+// modifies original
+func ResolveOperatorChains(n ASTNode, values map[string]int) ASTNode {
 	switch node := n.(type) {
-	case ASTUnitOverride:
-		return ResolveOperatorChains(node.Child)
-	case ASTComment:
-		return ResolveOperatorChains(node.Child)
-	case ASTVarSetter:
-		return ResolveOperatorChains(node.Child)
-	case ASTFunction:
-		for _, param := range node.Params {
-			if err := ResolveOperatorChains(param); err != nil {
-				return err
-			}
+	case *ASTUnitOverride:
+		node.Child = ResolveOperatorChains(node.Child, values)
+	case *ASTComment:
+		node.Child = ResolveOperatorChains(node.Child, values)
+	case *ASTVarSetter:
+		node.Child = ResolveOperatorChains(node.Child, values)
+	case *ASTOperator:
+		node.Left = ResolveOperatorChains(node.Left, values)
+		node.Right = ResolveOperatorChains(node.Right, values)
+	case *ASTFunction:
+		for i, param := range node.Params {
+			node.Params[i] = ResolveOperatorChains(param, values)
 		}
-	case ASTOperatorChain:
-		
-	default:
-		return errors.New("invalid node, chains may already be resolved")
+	case *ASTOperatorChain:
+		r := generateInitalOperator(node)
+		r = sortOperators(r, values)
+		return ResolveOperatorChains(r, values)
 	}
-}
-
-func generateInitalOperator(n ASTOperatorChain) ASTNode {
-	if len(n.Values) == 1 {
-		return n.Values[0]
-	}
-	var root *ASTOperator
-	var last *ASTOperator
-	for i := range n.Operators {
-		opIdx := len(n.Operators) - i - 1
-		cur := &ASTOperator{
-			Operator: n.Operators[opIdx],
-			Right:    n.Values[opIdx+1],
-		}
-		if root == nil {
-			root = cur
-		} else {
-			last.Left = *cur
-		}
-		last = cur
-	}
-	last.Left = n.Values[0]
-	return *root
+	return n
 }
 
 type astValImpl struct{}
 
-func (a astValImpl) astVal() {
+func (a *astValImpl) astVal() {
 	panic("should not be called")
 }
 
@@ -124,7 +104,7 @@ type ASTFunction struct {
 }
 
 func resolveExpression(code []Token) (ASTNode, error) {
-	res := ASTOperatorChain{
+	res := &ASTOperatorChain{
 		Operators: make([]string, 0),
 		Values:    make([]ASTNode, 0),
 	}
@@ -136,7 +116,7 @@ func resolveExpression(code []Token) (ASTNode, error) {
 			if expr == nil {
 				return nil, fmt.Errorf("cannot have unit without expression, got unit '%v'", tok.Name)
 			}
-			expr = ASTUnitOverride{
+			expr = &ASTUnitOverride{
 				Unit:  tok.Name,
 				Child: expr,
 			}
@@ -144,7 +124,7 @@ func resolveExpression(code []Token) (ASTNode, error) {
 			if expr != nil {
 				return nil, fmt.Errorf("expected operator or ) after expression, got literal '%v'", tok.Value)
 			}
-			expr = ASTLiteral{Value: tok.Value}
+			expr = &ASTLiteral{Value: tok.Value}
 		case TokenParenthesis:
 			if !tok.Opening {
 				return nil, fmt.Errorf("unexpected ')'")
@@ -204,7 +184,7 @@ func resolveFunc(code []Token) (ASTNode, error) {
 	if p, ok := code[len(code)-1].(TokenParenthesis); !ok || p.Opening {
 		return nil, fmt.Errorf("missing close parenthesis for function '%v'", fun.Name)
 	}
-	funNode := ASTFunction{
+	funNode := &ASTFunction{
 		Name:   fun.Name,
 		Params: make([]ASTNode, 0),
 	}
@@ -259,7 +239,7 @@ func resolveVarSetter(code []Token) (ASTNode, error) {
 		if err != nil {
 			return nil, err
 		}
-		return ASTVarSetter{
+		return &ASTVarSetter{
 			VarName: setter.VarName,
 			Child:   res,
 		}, nil
@@ -275,7 +255,7 @@ func resolveComment(code []Token) (ASTNode, error) {
 		if err != nil {
 			return nil, err
 		}
-		return ASTComment{
+		return &ASTComment{
 			Content: comment.Content,
 			Child:   res,
 		}, nil
@@ -300,4 +280,55 @@ func closingIdx(code []Token, startIdx int) int {
 		}
 	}
 	return -1
+}
+
+func sortOperators(n ASTNode, values map[string]int) ASTNode {
+	opNode, ok := n.(*ASTOperator)
+	if !ok {
+		return n
+	}
+	opNext, ok := opNode.Left.(*ASTOperator)
+	if !ok {
+		return n
+	}
+	op := sortOperators(opNext, values)
+	opNext = op.(*ASTOperator)
+	if getValue(opNode.Operator, values) > getValue(opNext.Operator, values) {
+		opNode.Left, opNext.Right = opNext.Right, opNode
+		opNode, opNext = opNext, opNode
+	} else {
+		opNode.Left = opNext
+	}
+	return opNode
+}
+
+func getValue(op string, values map[string]int) int {
+	val, ok := values[op]
+	if !ok {
+		return 0
+	}
+	return val
+}
+
+func generateInitalOperator(n *ASTOperatorChain) ASTNode {
+	if len(n.Values) == 1 {
+		return n.Values[0]
+	}
+	var root *ASTOperator
+	var last *ASTOperator
+	for i := range n.Operators {
+		opIdx := len(n.Operators) - i - 1
+		cur := &ASTOperator{
+			Operator: n.Operators[opIdx],
+			Right:    n.Values[opIdx+1],
+		}
+		if root == nil {
+			root = cur
+		} else {
+			last.Left = cur
+		}
+		last = cur
+	}
+	last.Left = n.Values[0]
+	return root
 }
