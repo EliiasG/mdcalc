@@ -27,8 +27,48 @@ func GenerateAst(code []Token) (ASTNode, error) {
 	return resolveExpression(code)
 }
 
-func ResolveOperatorChains(n ASTNode) {
+func ResolveOperatorChains(n ASTNode) error {
+	switch node := n.(type) {
+	case ASTUnitOverride:
+		return ResolveOperatorChains(node.Child)
+	case ASTComment:
+		return ResolveOperatorChains(node.Child)
+	case ASTVarSetter:
+		return ResolveOperatorChains(node.Child)
+	case ASTFunction:
+		for _, param := range node.Params {
+			if err := ResolveOperatorChains(param); err != nil {
+				return err
+			}
+		}
+	case ASTOperatorChain:
+		
+	default:
+		return errors.New("invalid node, chains may already be resolved")
+	}
+}
 
+func generateInitalOperator(n ASTOperatorChain) ASTNode {
+	if len(n.Values) == 1 {
+		return n.Values[0]
+	}
+	var root *ASTOperator
+	var last *ASTOperator
+	for i := range n.Operators {
+		opIdx := len(n.Operators) - i - 1
+		cur := &ASTOperator{
+			Operator: n.Operators[opIdx],
+			Right:    n.Values[opIdx+1],
+		}
+		if root == nil {
+			root = cur
+		} else {
+			last.Left = *cur
+		}
+		last = cur
+	}
+	last.Left = n.Values[0]
+	return *root
 }
 
 type astValImpl struct{}
