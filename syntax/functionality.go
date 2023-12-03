@@ -41,6 +41,7 @@ type Environment struct {
 	// Name, Param amount
 	Functions      map[string]map[int]Function
 	VariableValues map[string]VariableValue
+	OperatorPowers map[string]int
 	Formatter      Formatter
 	UnitLibrary    UnitLibrary
 }

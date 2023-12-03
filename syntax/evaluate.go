@@ -50,13 +50,9 @@ func (e *Environment) Evaluate(root ASTNode) (float64, error) {
 		}
 		return res, nil
 	case *ASTFunction:
-		funs, ok := e.Functions[node.Name]
-		if !ok {
-			return math.NaN(), fmt.Errorf("funcion %v does not exist", node.Name)
-		}
-		fun, ok := funs[len(node.Params)]
-		if !ok {
-			return math.NaN(), fmt.Errorf("function '%v' did not expect %v parameter(s)", node.Name, len(node.Params))
+		fun, err := e.getFunction(node)
+		if err != nil {
+			return math.NaN(), err
 		}
 		evalRes := make([]float64, len(node.Params))
 		for i, param := range node.Params {
@@ -73,6 +69,18 @@ func (e *Environment) Evaluate(root ASTNode) (float64, error) {
 		return res, nil
 	}
 	return math.NaN(), errors.New("invalid ast node")
+}
+
+func (e *Environment) getFunction(node *ASTFunction) (Function, error) {
+	funs, ok := e.Functions[node.Name]
+	if !ok {
+		return Function{}, fmt.Errorf("funcion %v does not exist", node.Name)
+	}
+	fun, ok := funs[len(node.Params)]
+	if !ok {
+		return Function{}, fmt.Errorf("function '%v' did not expect %v parameter(s)", node.Name, len(node.Params))
+	}
+	return fun, nil
 }
 
 func (e *Environment) parseLiteral(node *ASTLiteral) (float64, string, error) {
