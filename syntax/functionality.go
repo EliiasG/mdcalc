@@ -56,15 +56,17 @@ func (e *Environment) WriteCalculation(code string, sb *strings.Builder) error {
 		return err
 	}
 	tree = ResolveOperatorChains(tree, e.OperatorPowers)
-	lines, err := e.MakeMultilineCalculation(tree)
+	lines, err := e.MakeMultilineCalculation(&ASTComment{
+		Child: tree,
+	})
 	if err != nil {
 		return err
 	}
-	sb.WriteString("$$\nbegin{align*}")
+	sb.WriteString("$$\n\\begin{align*}")
 	for _, line := range lines {
 		sb.WriteRune('\n')
 		sb.WriteString(line)
 	}
-	sb.WriteString("\nend{align*}\n$$")
+	sb.WriteString("\n\\end{align*}\n$$")
 	return nil
 }

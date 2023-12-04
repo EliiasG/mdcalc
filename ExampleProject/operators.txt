@@ -1,0 +1,6 @@
+DkkPHour * Hour Dkk
+Dkk / DkkPHour Hour
+Dkk / Week Dkk
+Garn * Gram Gram
+Gram / GramPLap Lap
+Dkk / Lap DkkPLap

@@ -74,7 +74,7 @@ func (e *Environment) Evaluate(root ASTNode) (float64, error) {
 func (e *Environment) getFunction(node *ASTFunction) (Function, error) {
 	funs, ok := e.Functions[node.Name]
 	if !ok {
-		return Function{}, fmt.Errorf("funcion %v does not exist", node.Name)
+		return Function{}, fmt.Errorf("function '%v' does not exist", node.Name)
 	}
 	fun, ok := funs[len(node.Params)]
 	if !ok {

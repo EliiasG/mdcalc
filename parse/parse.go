@@ -10,11 +10,10 @@ import (
 
 // Terrible code
 // parse mdcalc code: mdc is the code to be parsed, header is the title, and sub is the subproblem name where <n> will be replaced by the index
-func Parse(mdc, header, sub string) (string, error) {
-	env := setup.GenerateEnvironment()
+func Parse(mdc, header, sub string, lib syntax.UnitLibrary) (string, error) {
+	env := setup.GenerateEnvironment(lib)
 	var sb strings.Builder
-	sb.WriteString("# ")
-	sb.WriteString(header)
+	started := false
 	n := 1
 	for i, line := range strings.Split(mdc, "\n") {
 		sb.WriteString("  \n")
@@ -31,6 +30,12 @@ func Parse(mdc, header, sub string) (string, error) {
 		default:
 			return "", err(i, "Every line must start with either T, C or |")
 		case '|':
+			if !started {
+				sb.Reset()
+				sb.WriteString("# ")
+				sb.WriteString(header + "\n")
+				started = true
+			}
 			sb.WriteString("### ")
 			sb.WriteString(strings.ReplaceAll(sub, "<n>", fmt.Sprint(n)))
 			n++
@@ -42,14 +47,12 @@ func Parse(mdc, header, sub string) (string, error) {
 		case 'I':
 			sb.WriteString(fmt.Sprintf("![Image!](%v)", content))
 		case 'C':
-			//sb.WriteString("$$\\dfrac{\\text{5746 kr. i timen}}{1}=\\text{1 kr. i timen \\textit{(efter AM bidrag)}}$$")
-			r := syntax.Tokenize(content)
-			tree, err := syntax.GenerateAst(r)
-			tree = syntax.ResolveOperatorChains(tree, env.OperatorPowers)
+			err := env.WriteCalculation(content, &sb)
 			if err != nil {
-				panic(err)
+				fmt.Printf("error on line %v:\n", i+1)
+				sb.WriteString(fmt.Sprintf("### <span style=\"color:red\">Error: %v</span>", err.Error()))
+				fmt.Println(err.Error())
 			}
-			fmt.Println(tree)
 		}
 	}
 	return sb.String(), nil

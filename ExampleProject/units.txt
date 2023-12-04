@@ -1,0 +1,9 @@
+DkkPHour kr. i timen
+Hour timer
+Dkk kr.
+Week uger
+Garn garnnøgler
+Gram g.
+GramPLap g. per gryddelap
+DkkPLap kr. per grydelap
+Lap grydelapper

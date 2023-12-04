@@ -26,7 +26,7 @@ func (e *Environment) GetUnit(root ASTNode) string {
 		return e.GetUnit(node.Child)
 	case *ASTOperator:
 		l := e.GetUnit(node.Left)
-		r := e.GetUnit(node.Left)
+		r := e.GetUnit(node.Right)
 		if l == "" || l == r {
 			return r
 		}
@@ -54,17 +54,17 @@ func (e *Environment) MakeLatexExpression(root ASTNode) (string, error) {
 			return "", err
 		}
 		// only do comment on result
-		return e.Formatter.FormatNumber(val, -1, unit, ""), nil
+		return e.Formatter.FormatNumber(val, -1, e.UnitLibrary.GetUnitDisplayName(unit), ""), nil
 	case *ASTComment:
 		res, err := e.Evaluate(root)
 		if err != nil {
 			return "", err
 		}
-		comment, precision, err := commentData(node.Content)
+		_, precision, err := commentData(node.Content)
 		if err != nil {
 			return "", err
 		}
-		return e.Formatter.FormatNumber(res, precision, e.UnitLibrary.GetUnitDisplayName(e.GetUnit(node)), comment), nil
+		return e.Formatter.FormatNumber(res, precision, e.UnitLibrary.GetUnitDisplayName(e.GetUnit(node)), ""), nil
 	case *ASTVarSetter:
 		return e.MakeLatexExpression(node.Child)
 	case *ASTOperator:
@@ -81,10 +81,6 @@ func (e *Environment) MakeLatexCalculation(root ASTNode) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	expr, err := e.MakeLatexExpression(root)
-	if err != nil {
-		return "", err
-	}
 	node, ok := root.(*ASTComment)
 	comment := ""
 	precision := 2
@@ -93,6 +89,11 @@ func (e *Environment) MakeLatexCalculation(root ASTNode) (string, error) {
 		if err != nil {
 			return "", err
 		}
+		root = node.Child
+	}
+	expr, err := e.MakeLatexExpression(root)
+	if err != nil {
+		return "", err
 	}
 	unit := e.UnitLibrary.GetUnitDisplayName(e.GetUnit(root))
 	return e.Formatter.FormatLine(expr, e.Formatter.FormatNumber(res, precision, unit, comment)), nil
@@ -109,7 +110,7 @@ func (e *Environment) MakeMultilineCalculation(root ASTNode) ([]string, error) {
 		if err != nil {
 			return nil, err
 		}
-		line, err := e.MakeLatexCalculation(node.Child)
+		line, err := e.MakeLatexCalculation(node)
 		if err != nil {
 			return nil, err
 		}
@@ -120,11 +121,11 @@ func (e *Environment) MakeMultilineCalculation(root ASTNode) ([]string, error) {
 	case *ASTVarSetter:
 		return e.MakeMultilineCalculation(node.Child)
 	case *ASTOperator:
-		l, err := e.MakeMultilineCalculation(root)
+		l, err := e.MakeMultilineCalculation(node.Left)
 		if err != nil {
 			return nil, err
 		}
-		r, err := e.MakeMultilineCalculation(root)
+		r, err := e.MakeMultilineCalculation(node.Right)
 		if err != nil {
 			return nil, err
 		}
@@ -164,7 +165,7 @@ func (e *Environment) formatFunction(node *ASTFunction) (string, error) {
 		if err != nil {
 			return "", err
 		}
-		replacements = append(replacements, "@"+fmt.Sprint(i+1))
+		replacements = append(replacements, "@"+fmt.Sprint(i))
 		replacements = append(replacements, fParam)
 	}
 	return strings.NewReplacer(replacements...).Replace(fun.Latex), nil
@@ -179,7 +180,7 @@ func (e *Environment) formatOperator(node *ASTOperator) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	rRes, err := e.MakeLatexExpression(node.Left)
+	rRes, err := e.MakeLatexExpression(node.Right)
 	if err != nil {
 		return "", err
 	}
@@ -211,7 +212,7 @@ func (e *Environment) needParenthesis(op *ASTOperator) (left bool, right bool) {
 	if ok {
 		left = getValue(lOp.Operator, e.OperatorPowers) > getValue(op.Operator, e.OperatorPowers)
 	}
-	rOp, ok := op.Left.(*ASTOperator)
+	rOp, ok := op.Right.(*ASTOperator)
 	if ok {
 		right = getValue(rOp.Operator, e.OperatorPowers) >= getValue(op.Operator, e.OperatorPowers)
 	}

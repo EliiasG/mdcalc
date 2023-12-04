@@ -21,9 +21,6 @@ func GenerateAst(code []Token) (ASTNode, error) {
 	if res != nil {
 		return res, nil
 	}
-	if _, ok := code[0].(TokenFunc); ok {
-		return resolveFunc(code)
-	}
 	return resolveExpression(code)
 }
 
@@ -151,7 +148,7 @@ func resolveExpression(code []Token) (ASTNode, error) {
 				return nil, errors.New("expected )")
 			}
 			var err error
-			expr, err = GenerateAst(code[i : next+1])
+			expr, err = resolveFunc(code[i : next+1])
 			if err != nil {
 				return nil, err
 			}

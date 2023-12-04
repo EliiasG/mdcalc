@@ -2,14 +2,18 @@ package setup
 
 import "github.com/eliiasg/mdcalc/syntax"
 
-func GetOperatorPowers() map[string]int {
-	return map[string]int{
-		"*": 1,
-		"/": 1,
-		"^": 2,
+func GenerateEnvironment(lib syntax.UnitLibrary) *syntax.Environment {
+	return &syntax.Environment{
+		Operators:      genOperators(),
+		Functions:      genFunctions(),
+		VariableValues: map[string]syntax.VariableValue{},
+		OperatorPowers: map[string]int{
+			"*":  1,
+			"/":  1,
+			"//": 1,
+			"^":  2,
+		},
+		Formatter:   &formatter{},
+		UnitLibrary: lib,
 	}
-}
-
-func GenerateEnvironment() *syntax.Environment {
-	
 }
