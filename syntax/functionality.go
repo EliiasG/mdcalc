@@ -56,9 +56,11 @@ func (e *Environment) WriteCalculation(code string, sb *strings.Builder) error {
 		return err
 	}
 	tree = ResolveOperatorChains(tree, e.OperatorPowers)
-	lines, err := e.MakeMultilineCalculation(&ASTComment{
-		Child: tree,
-	})
+	_, ok := tree.(*ASTComment)
+	if !ok {
+		tree = &ASTComment{Child: tree}
+	}
+	lines, err := e.MakeMultilineCalculation(tree)
 	if err != nil {
 		return err
 	}

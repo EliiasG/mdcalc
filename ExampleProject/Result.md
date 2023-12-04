@@ -7,7 +7,17 @@
 Annas løn for de 24 timer:  
 $$
 \begin{align*}
-\textbf{88,92}\text{\scriptsize{ kr. i timen}}\cdot\textbf{24}\text{\scriptsize{ timer}} &= \textbf{2134,08}\text{\scriptsize{ kr.}}\\ \\ 
+\textbf{1}\text{\scriptsize{}}+(\dfrac{\textbf{1}\text{\scriptsize{}}\cdot\textbf{5}\text{\scriptsize{ kr.}}}{\textbf{3}\text{\scriptsize{}}+\textbf{3}\text{\scriptsize{}}}) &= \textbf{1,83}\text{\scriptsize{ kr.}}\textit{ (efter am bidrag)}\\ \\ 
+
+\textbf{1,83}\text{\scriptsize{ kr.}} &= \textbf{1,83}\text{\scriptsize{ kr.}}\\ \\ 
+
+\end{align*}
+$$  
+$$
+\begin{align*}
+\textbf{88,92}\text{\scriptsize{ kr. i timen}}\cdot\textbf{24}\text{\scriptsize{ timer}} &= \textbf{2134,08}\text{\scriptsize{ kr.}}\textit{ (efter 24 timer)}\\ \\ 
+
+\textbf{2134,08}\text{\scriptsize{ kr.}} &= \textbf{2134,08}\text{\scriptsize{ kr.}}\\ \\ 
 
 \end{align*}
 $$  
@@ -36,7 +46,7 @@ $$
 Antal timer Anna skal arbejde om ugen for at tjæne 35.300 kr om året:  
 $$
 \begin{align*}
-\textbf{35300}\text{\scriptsize{ kr.}}\div\textbf{52}\text{\scriptsize{ uger}}\div\textbf{88,92}\text{\scriptsize{ kr. i timen}} &= \textbf{7,63}\text{\scriptsize{ timer}}\\ \\ 
+\textbf{35300}\text{\scriptsize{ kr.}}\div\textbf{52}\text{\scriptsize{ uger}}\div\textbf{88,92}\text{\scriptsize{ kr. i timen}} &= \textbf{7,63}\text{\scriptsize{ timer}}\textit{ (godmorgen)}\\ \\ 
 
 \end{align*}
 $$  

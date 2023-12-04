@@ -71,7 +71,7 @@ func Tokenize(prgm string) []Token {
 	state := &tokenizerState{
 		res: make([]Token, 0),
 	}
-	for _, c := range prgm + " " {
+	for _, c := range "(" + prgm + ") " {
 		handleNum(state, c)
 		handleUnit(state, c)
 		handleVarRef(state, c)
