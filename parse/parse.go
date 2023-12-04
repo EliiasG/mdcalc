@@ -4,12 +4,14 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/eliiasg/mdcalc/setup"
 	"github.com/eliiasg/mdcalc/syntax"
 )
 
 // Terrible code
 // parse mdcalc code: mdc is the code to be parsed, header is the title, and sub is the subproblem name where <n> will be replaced by the index
 func Parse(mdc, header, sub string) (string, error) {
+	env := setup.GenerateEnvironment()
 	var sb strings.Builder
 	sb.WriteString("# ")
 	sb.WriteString(header)
@@ -40,14 +42,10 @@ func Parse(mdc, header, sub string) (string, error) {
 		case 'I':
 			sb.WriteString(fmt.Sprintf("![Image!](%v)", content))
 		case 'C':
-			sb.WriteString("$$\\dfrac{\\text{5746 kr. i timen}}{1}=\\text{1 kr. i timen \\textit{(efter AM bidrag)}}$$")
+			//sb.WriteString("$$\\dfrac{\\text{5746 kr. i timen}}{1}=\\text{1 kr. i timen \\textit{(efter AM bidrag)}}$$")
 			r := syntax.Tokenize(content)
 			tree, err := syntax.GenerateAst(r)
-			tree = syntax.ResolveOperatorChains(tree, map[string]int{
-				"*": 1,
-				"/": 1,
-				"^": 2,
-			})
+			tree = syntax.ResolveOperatorChains(tree, env.OperatorPowers)
 			if err != nil {
 				panic(err)
 			}

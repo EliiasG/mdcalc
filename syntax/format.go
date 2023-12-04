@@ -183,14 +183,12 @@ func (e *Environment) formatOperator(node *ASTOperator) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	if op.Parenthesis {
-		l, r := e.needParenthesis(node)
-		if l {
-			lRes = e.Formatter.FormatParenthesie(lRes)
-		}
-		if r {
-			rRes = e.Formatter.FormatParenthesie(rRes)
-		}
+	l, r := e.needParenthesis(node)
+	if l && op.ParenthesisLeft {
+		lRes = e.Formatter.FormatParenthesie(lRes)
+	}
+	if r && op.ParenthesisRight {
+		rRes = e.Formatter.FormatParenthesie(rRes)
 	}
 	return strings.ReplaceAll(strings.ReplaceAll(op.Latex, "@l", lRes), "@r", rRes), nil
 }

@@ -1,5 +1,7 @@
 package syntax
 
+import "strings"
+
 type Function struct {
 	Execute func([]float64) (float64, error)
 	// Use @i where 'i' for the formatted parameter staring at i = 0
@@ -13,7 +15,8 @@ type Operator struct {
 	// Use @l and @r for the formatted left and right parameters.
 	Latex string
 	// Add parenthesis if necessary, should only be false for something like a fraction line
-	Parenthesis bool
+	ParenthesisLeft  bool
+	ParenthesisRight bool
 	// Useful for some unit management stuff
 	OrderMatters bool
 }
@@ -44,4 +47,24 @@ type Environment struct {
 	OperatorPowers map[string]int
 	Formatter      Formatter
 	UnitLibrary    UnitLibrary
+}
+
+func (e *Environment) WriteCalculation(code string, sb *strings.Builder) error {
+	tokens := Tokenize(code)
+	tree, err := GenerateAst(tokens)
+	if err != nil {
+		return err
+	}
+	tree = ResolveOperatorChains(tree, e.OperatorPowers)
+	lines, err := e.MakeMultilineCalculation(tree)
+	if err != nil {
+		return err
+	}
+	sb.WriteString("$$\nbegin{align*}")
+	for _, line := range lines {
+		sb.WriteRune('\n')
+		sb.WriteString(line)
+	}
+	sb.WriteString("\nend{align*}\n$$")
+	return nil
 }
