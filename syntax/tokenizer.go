@@ -141,7 +141,7 @@ func handleParenthesesAndComments(s *tokenizerState, c rune) {
 			s.curRes.Reset()
 		}
 		s.res = append(s.res, TokenParenthesis{Opening: false})
-	} else if c == ':' {
+	} else if c == ':' && !s.handlingComment {
 		s.curRes.Reset()
 		s.handlingComment = true
 		s.readyForUnit = false
