@@ -14,4 +14,4 @@ T Antal timer Anna skal arbejde om ugen for at tjæne 35.300 kr om året:
 C 35300Dkk%52Week%tl
 |
 T Leas grydelapper
-C (3*89Dkk+500Dkk: som Lea vil tjæne)%(floor((3*10Garn*50Gram: stof i alt)%120GramPLap,)Lap: efter nedrunding)
+C (3*89Dkk+500Dkk: som Lea vil tjæne)%(floor((3*10Garn*50Gram: stof i alt)%120GramPLap)Lap: efter nedrunding)

@@ -190,14 +190,14 @@ func resolveFunc(code []Token) (ASTNode, error) {
 	}
 	startidx := 2
 	for i, t := range code[1:] {
-		if _, ok := t.(TokenComma); !ok {
+		if _, ok := t.(TokenComma); !ok && i != len(code)-2 {
 			continue
 		}
 		ast, err := GenerateAst(code[startidx : i+1])
 		if err != nil {
 			return nil, err
 		}
-		startidx = i + 1
+		startidx = i + 2
 		funNode.Params = append(funNode.Params, ast)
 	}
 	return funNode, nil
