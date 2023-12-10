@@ -8,6 +8,7 @@ import (
 
 func genFunctions() map[string]map[int]syntax.Function {
 	return map[string]map[int]syntax.Function{
+		// functions
 		"floor": {
 			1: {
 				Execute: func(args []float64) (float64, error) {
@@ -67,7 +68,7 @@ func genFunctions() map[string]map[int]syntax.Function {
 		"sin": {
 			1: {
 				Execute: func(args []float64) (float64, error) {
-					return math.Sin(args[0]), nil
+					return math.Sin(args[0] * math.Pi / 180), nil
 				},
 				Latex: "\\sin @0",
 			},
@@ -75,7 +76,7 @@ func genFunctions() map[string]map[int]syntax.Function {
 		"cos": {
 			1: {
 				Execute: func(args []float64) (float64, error) {
-					return math.Cos(args[0]), nil
+					return math.Cos(args[0] * math.Pi / 180), nil
 				},
 				Latex: "\\cos @0",
 			},
@@ -83,7 +84,7 @@ func genFunctions() map[string]map[int]syntax.Function {
 		"tan": {
 			1: {
 				Execute: func(args []float64) (float64, error) {
-					return math.Tan(args[0]), nil
+					return math.Tan(args[0] * math.Pi / 180), nil
 				},
 				Latex: "\\tan @0",
 			},
@@ -91,7 +92,7 @@ func genFunctions() map[string]map[int]syntax.Function {
 		"asin": {
 			1: {
 				Execute: func(args []float64) (float64, error) {
-					return math.Asin(args[0]), nil
+					return math.Asin(args[0]) * math.Pi / 180, nil
 				},
 				Latex: "\\arcsin @0",
 			},
@@ -99,7 +100,7 @@ func genFunctions() map[string]map[int]syntax.Function {
 		"acos": {
 			1: {
 				Execute: func(args []float64) (float64, error) {
-					return math.Acos(args[0]), nil
+					return math.Acos(args[0]) * math.Pi / 180, nil
 				},
 				Latex: "\\arccos @0",
 			},
@@ -107,7 +108,7 @@ func genFunctions() map[string]map[int]syntax.Function {
 		"atan": {
 			1: {
 				Execute: func(args []float64) (float64, error) {
-					return math.Atan(args[0]), nil
+					return math.Atan(args[0]) * math.Pi / 180, nil
 				},
 				Latex: "\\arctan @0",
 			},
@@ -118,6 +119,32 @@ func genFunctions() map[string]map[int]syntax.Function {
 					return math.Mod(args[0], args[1]), nil
 				},
 				Latex: "@0 \\mod @1",
+			},
+		},
+		// symbols
+		"pi": {
+			0: {
+				Execute: func(args []float64) (float64, error) {
+					return math.Pi, nil
+				},
+				Latex: "\\pi",
+			},
+		},
+		"e": {
+			0: {
+				Execute: func(args []float64) (float64, error) {
+					return math.E, nil
+				},
+				Latex: "\\e",
+			},
+		},
+		// util / formatting
+		"par": {
+			1: {
+				Execute: func(args []float64) (float64, error) {
+					return args[0], nil
+				},
+				Latex: "(@0)",
 			},
 		},
 	}

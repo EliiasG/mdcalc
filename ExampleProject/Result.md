@@ -7,19 +7,19 @@
 Annas løn for de 24 timer:  
 $$
 \begin{align*}
-\sqrt[5]{88,92}\text{\scriptsize{ kr. i timen}}\cdot\textbf{24}\text{\scriptsize{ timer}} &= \textbf{2134,08}\text{\scriptsize{ kr.}}\textit{ (efter 24 timer)}\\ \\ 
+\textbf{88,92}\text{\scriptsize{ kr. i timen}}\cdot\textbf{24}\text{\scriptsize{ timer}} &= \textbf{2134,08}\text{\scriptsize{ kr.}}\textit{ (efter 24 timer)}\\ \\ 
 
 \textbf{2134,08}\text{\scriptsize{ kr.}} &= \textbf{2134,08}\text{\scriptsize{ kr.}}\\ \\ 
 
 \end{align*}
 $$  
+hejsaa  
 $$
 \begin{align*}
-\textbf{0,1}\text{\scriptsize{}}+\textbf{0,243242}\text{\scriptsize{}} &= \textbf{0,34324200000000005}\text{\scriptsize{}}\textit{ (hej)}\\ \\ 
+\textbf{2}\text{\scriptsize{}}\cdot(\textbf{5}\text{\scriptsize{}}+\textbf{7}\text{\scriptsize{}}) &= \textbf{24}\text{\scriptsize{ kr.}}\\ \\ 
 
 \end{align*}
 $$  
-hejsa  
 ### 1.2  
 Annas løn efter AM bidrag:  
 $$
@@ -52,7 +52,7 @@ $$
 Leas grydelapper  
 $$
 \begin{align*}
-(\textbf{3}\text{\scriptsize{}}\cdot\textbf{89}\text{\scriptsize{ kr.}})+\textbf{500}\text{\scriptsize{ kr.}} &= \textbf{767}\text{\scriptsize{ kr.}}\textit{ (som Lea vil tjæne)}\\ \\ 
+\textbf{3}\text{\scriptsize{}}\cdot\textbf{89}\text{\scriptsize{ kr.}}+\textbf{500}\text{\scriptsize{ kr.}} &= \textbf{767}\text{\scriptsize{ kr.}}\textit{ (som Lea vil tjæne)}\\ \\ 
 
 \textbf{3}\text{\scriptsize{}}\cdot\textbf{10}\text{\scriptsize{ garnnøgler}}\cdot\textbf{50}\text{\scriptsize{ g.}} &= \textbf{1500}\text{\scriptsize{ g.}}\textit{ (stof i alt)}\\ \\ 
 

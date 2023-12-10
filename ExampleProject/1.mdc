@@ -2,7 +2,8 @@ C tl=88.92DkkPHour
 |
 T Annas løn for de 24 timer:
 C l=tl*24Hour: efter 24 timer
-T hejsa
+T hejsaa
+C 2*par(5+7)Dkk
 |
 T Annas løn efter AM bidrag:
 C l*(d=(1-0.08): del af løn Anna får)

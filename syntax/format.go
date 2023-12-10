@@ -210,11 +210,11 @@ func (e *Environment) formatUnitOverride(node *ASTUnitOverride) (string, error) 
 func (e *Environment) needParenthesis(op *ASTOperator) (left bool, right bool) {
 	lOp, ok := op.Left.(*ASTOperator)
 	if ok {
-		left = getValue(lOp.Operator, e.OperatorPowers) > getValue(op.Operator, e.OperatorPowers)
+		left = getValue(lOp.Operator, e.OperatorPowers) < getValue(op.Operator, e.OperatorPowers)
 	}
 	rOp, ok := op.Right.(*ASTOperator)
 	if ok {
-		right = getValue(rOp.Operator, e.OperatorPowers) >= getValue(op.Operator, e.OperatorPowers)
+		right = getValue(rOp.Operator, e.OperatorPowers) <= getValue(op.Operator, e.OperatorPowers)
 	}
 	return
 }
