@@ -7,3 +7,5 @@ Gram g.
 GramPLap g. per gryddelap
 DkkPLap kr. per grydelap
 Lap grydelapper
+Eur euro
+Weekk uger

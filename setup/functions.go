@@ -92,7 +92,7 @@ func genFunctions() map[string]map[int]syntax.Function {
 		"asin": {
 			1: {
 				Execute: func(args []float64) (float64, error) {
-					return math.Asin(args[0]) * math.Pi / 180, nil
+					return math.Asin(args[0]) / math.Pi * 180, nil
 				},
 				Latex: "\\arcsin @0",
 			},
@@ -100,7 +100,7 @@ func genFunctions() map[string]map[int]syntax.Function {
 		"acos": {
 			1: {
 				Execute: func(args []float64) (float64, error) {
-					return math.Acos(args[0]) * math.Pi / 180, nil
+					return math.Acos(args[0]) / math.Pi * 180, nil
 				},
 				Latex: "\\arccos @0",
 			},
@@ -108,7 +108,7 @@ func genFunctions() map[string]map[int]syntax.Function {
 		"atan": {
 			1: {
 				Execute: func(args []float64) (float64, error) {
-					return math.Atan(args[0]) * math.Pi / 180, nil
+					return math.Atan(args[0]) / math.Pi * 180, nil
 				},
 				Latex: "\\arctan @0",
 			},

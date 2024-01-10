@@ -4,3 +4,5 @@ Dkk / Week Dkk
 Garn * Gram Gram
 Gram / GramPLap Lap
 Dkk / Lap DkkPLap
+Dkk / Weekk DkkPWeek
+DkkPWeek / DkkPHour Dkk

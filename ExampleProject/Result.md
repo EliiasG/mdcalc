@@ -16,7 +16,7 @@ $$
 hejsaa  
 $$
 \begin{align*}
-\textbf{2}\text{\scriptsize{}}\cdot(\textbf{5}\text{\scriptsize{}}+\textbf{7}\text{\scriptsize{}}) &= \textbf{24}\text{\scriptsize{ kr.}}\\ \\ 
+\textbf{2}\text{\scriptsize{}}\cdot(\textbf{5}\text{\scriptsize{}}+\textbf{7}\text{\scriptsize{}}) &= \textbf{24}\text{\scriptsize{}}\\ \\ 
 
 \end{align*}
 $$  
@@ -44,7 +44,7 @@ $$
 Antal timer Anna skal arbejde om ugen for at tjæne 35.300 kr om året:  
 $$
 \begin{align*}
-\textbf{35300}\text{\scriptsize{ kr.}}\div\textbf{52}\text{\scriptsize{ uger}}\div\textbf{88,92}\text{\scriptsize{ kr. i timen}} &= \textbf{7,63}\text{\scriptsize{ timer}}\\ \\ 
+\textbf{35300}\text{\scriptsize{ kr.}}\div\textbf{52}\text{\scriptsize{ uger}}\div\textbf{88,92}\text{\scriptsize{ kr. i timen}} &= \textbf{7,63}\text{\scriptsize{ kr.}}\\ \\ 
 
 \end{align*}
 $$  
