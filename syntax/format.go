@@ -91,6 +91,22 @@ func (e *Environment) MakeLatexCalculation(root ASTNode) (string, error) {
 		}
 		root = node.Child
 	}
+	ok = true
+	check := root
+	for ok {
+		ok = false
+		switch r := check.(type) {
+		case *ASTComment:
+			check = r.Child
+			ok = true
+		case *ASTVarSetter:
+			check = r.Child
+			ok = true
+		}
+	}
+	if _, ok = check.(*ASTLiteral); ok {
+		return "", nil
+	}
 	expr, err := e.MakeLatexExpression(root)
 	if err != nil {
 		return "", err

@@ -44,7 +44,7 @@ $$
 Antal timer Anna skal arbejde om ugen for at tjæne 35.300 kr om året:  
 $$
 \begin{align*}
-\textbf{35300}\text{\scriptsize{ kr.}}\div\textbf{52}\text{\scriptsize{ uger}}\div\textbf{88,92}\text{\scriptsize{ kr. i timen}} &= \textbf{7,63}\text{\scriptsize{ kr.}}\\ \\ 
+\textbf{35300}\text{\scriptsize{ kr.}}\div\textbf{52}\text{\scriptsize{ uger}}\div\textbf{88,92}\text{\scriptsize{ kr. i timen}} &= \textbf{7,63}\text{\scriptsize{ timer}}\\ \\ 
 
 \end{align*}
 $$  
@@ -59,6 +59,23 @@ $$
 \lfloor\textbf{1500}\text{\scriptsize{ g.}}\div\textbf{120}\text{\scriptsize{ g. per gryddelap}}\rfloor &= \textbf{12}\text{\scriptsize{ grydelapper}}\textit{ (efter nedrunding)}\\ \\ 
 
 \textbf{767}\text{\scriptsize{ kr.}}\div\textbf{12}\text{\scriptsize{ grydelapper}} &= \textbf{63,92}\text{\scriptsize{ kr. per grydelap}}\\ \\ 
+
+\end{align*}
+$$  
+
+# Opgave 2
+### 2.1  
+$$
+\begin{align*}
+\dfrac{\textbf{1}\text{\scriptsize{}}}{\textbf{3}\text{\scriptsize{}}} &= \textbf{0,33}\text{\scriptsize{}}\\ \\ 
+
+\end{align*}
+$$  
+$$
+\begin{align*}
+\textbf{0,3333333333}\text{\scriptsize{}}\cdot\textbf{2}\text{\scriptsize{}} &= \textbf{0,66667}\text{\scriptsize{}}\textit{ (no comment)}\\ \\ 
+
+\textbf{0,66667}\text{\scriptsize{}}\cdot\textbf{3}\text{\scriptsize{}} &= \textbf{2}\text{\scriptsize{}}\\ \\ 
 
 \end{align*}
 $$  
