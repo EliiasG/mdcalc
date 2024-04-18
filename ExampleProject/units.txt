@@ -9,3 +9,5 @@ DkkPLap kr. per grydelap
 Lap grydelapper
 Eur euro
 Weekk uger
+Mtr meter
+Dl dl

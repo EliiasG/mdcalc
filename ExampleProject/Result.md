@@ -9,8 +9,6 @@ $$
 \begin{align*}
 \textbf{88,92}\text{\scriptsize{ kr. i timen}}\cdot\textbf{24}\text{\scriptsize{ timer}} &= \textbf{2134,08}\text{\scriptsize{ kr.}}\textit{ (efter 24 timer)}\\ \\ 
 
-\textbf{2134,08}\text{\scriptsize{ kr.}} &= \textbf{2134,08}\text{\scriptsize{ kr.}}\\ \\ 
-
 \end{align*}
 $$  
 hejsaa  
@@ -62,20 +60,21 @@ $$
 
 \end{align*}
 $$  
+  
 
 # Opgave 2
 ### 2.1  
+Gram mælk der skal i grøden  
 $$
 \begin{align*}
-\dfrac{\textbf{1}\text{\scriptsize{}}}{\textbf{3}\text{\scriptsize{}}} &= \textbf{0,33}\text{\scriptsize{}}\\ \\ 
+\dfrac{\textbf{25}\text{\scriptsize{ dl}}}{\textbf{6}\text{\scriptsize{}}}\cdot\textbf{4}\text{\scriptsize{}} &= \textbf{16,67}\text{\scriptsize{ dl}}\textit{ (com)}\\ \\ 
 
 \end{align*}
 $$  
 $$
 \begin{align*}
-\textbf{0,3333333333}\text{\scriptsize{}}\cdot\textbf{2}\text{\scriptsize{}} &= \textbf{0,66667}\text{\scriptsize{}}\textit{ (no comment)}\\ \\ 
 
-\textbf{0,66667}\text{\scriptsize{}}\cdot\textbf{3}\text{\scriptsize{}} &= \textbf{2}\text{\scriptsize{}}\\ \\ 
+\textbf{7}\text{\scriptsize{}}\cdot\textbf{16,67}\text{\scriptsize{ dl}} &= \textbf{116,67}\text{\scriptsize{ dl}}\\ \\ 
 
 \end{align*}
 $$  

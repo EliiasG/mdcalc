@@ -56,6 +56,13 @@ func (e *Environment) WriteCalculation(code string, sb *strings.Builder) error {
 		return err
 	}
 	tree = ResolveOperatorChains(tree, e.OperatorPowers)
+	if vs, ok := tree.(*ASTVarSetter); ok {
+		if co, ok := vs.Child.(*ASTComment); ok {
+			vs.Child = co.Child
+			co.Child = vs
+			tree = co
+		}
+	}
 	_, ok := tree.(*ASTComment)
 	if !ok {
 		tree = &ASTComment{Child: tree}

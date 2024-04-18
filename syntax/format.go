@@ -56,6 +56,7 @@ func (e *Environment) MakeLatexExpression(root ASTNode) (string, error) {
 		// only do comment on result
 		return e.Formatter.FormatNumber(val, -1, e.UnitLibrary.GetUnitDisplayName(unit), ""), nil
 	case *ASTComment:
+
 		res, err := e.Evaluate(root)
 		if err != nil {
 			return "", err
@@ -65,6 +66,8 @@ func (e *Environment) MakeLatexExpression(root ASTNode) (string, error) {
 			return "", err
 		}
 		return e.Formatter.FormatNumber(res, precision, e.UnitLibrary.GetUnitDisplayName(e.GetUnit(node)), ""), nil
+
+		//return e.MakeLatexExpression(node.Child)
 	case *ASTVarSetter:
 		return e.MakeLatexExpression(node.Child)
 	case *ASTOperator:
@@ -100,6 +103,9 @@ func (e *Environment) MakeLatexCalculation(root ASTNode) (string, error) {
 			check = r.Child
 			ok = true
 		case *ASTVarSetter:
+			check = r.Child
+			ok = true
+		case *ASTUnitOverride:
 			check = r.Child
 			ok = true
 		}
