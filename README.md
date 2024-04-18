@@ -1,7 +1,7 @@
 # MDCalc
 A language made to have mathmatical expressions automatically be converted to a list of calculations. (for the exam where the calculations must be explained)  
 # Docs
-## General Syntax
+## Syntax
 MDCalc renders instructions line by line, starting in 1.mdc, then 2.mdc, 3.mdc and so on.  
 Every n.mdc defines a solution for problem n (so 1.mdc for problem 1).  
 Every line must start with an instruction character.  
@@ -22,4 +22,34 @@ Every line must start with an instruction character.
 | Operator | *{expr}{op}{expr}* | Applies operator to expressions. When compiling MDCalc will ask for the resulting unit of applying operators to units.  |
 | Function | *{function}({expr}, {expr}, ...)* | Applies function to expression(s), resulting unit will always be None. |
 
-*note: messajhdsajdkjsakdgasgd*
+*note: it is not necessary to add parathesis around an entire calculation or function parameter for comments and var setters*
+
+### Operators
+| Operator | Function |
+| - | - |
+| * | Multiply
+| / | Divide with fraction line
+| % | Also divides, just formats without fraction line, for mod use the function
+| ^ | Power
+| + | Addition
+| - | Subtraction
+
+### Functions
+| Name | Comment |
+| - | - |
+| pi() | Always returns pi
+| e() | Always returns e
+| par(x) | Adds parenthesis around formatted output, use in case MDCalc fails to add them
+| floor(x)
+| ceil(x)
+| abs(x)
+| sqrt(x)
+| root(r, x)
+| log10(x)
+| log(b, x)
+| sin(x)
+| cos(x)
+| tan(x)
+| asin(x)
+| acos(x)
+| mod(a, b)
