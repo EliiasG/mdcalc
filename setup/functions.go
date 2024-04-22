@@ -147,5 +147,13 @@ func genFunctions() map[string]map[int]syntax.Function {
 				Latex: "(@0)",
 			},
 		},
+		"neg": {
+			1: {
+				Execute: func(args []float64) (float64, error) {
+					return -args[0], nil
+				},
+				Latex: "-@0",
+			},
+		},
 	}
 }

@@ -78,4 +78,11 @@ $$
 
 \end{align*}
 $$  
+### 2.2  
+$$
+\begin{align*}
+-(\textbf{7}\text{\scriptsize{}}+\textbf{2}\text{\scriptsize{}}) &= \textbf{-9}\text{\scriptsize{}}\\ \\ 
+
+\end{align*}
+$$  
 

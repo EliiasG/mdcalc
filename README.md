@@ -35,11 +35,14 @@ Every line must start with an instruction character.
 | - | Subtraction
 
 ### Functions
+
+*all trigonometry uses degrees*
 | Name | Comment |
 | - | - |
 | pi() | Always returns pi
 | e() | Always returns e
 | par(x) | Adds parenthesis around formatted output, use in case MDCalc fails to add them
+| neg(x) | Negates the input and formats using a '-', this is because I forgot to add negating to the MDCalc syntax, remember to use par() on input if parenthesis are needed 
 | floor(x)
 | ceil(x)
 | abs(x)
@@ -50,6 +53,7 @@ Every line must start with an instruction character.
 | sin(x)
 | cos(x)
 | tan(x)
+| atan(x)
 | asin(x)
 | acos(x)
 | mod(a, b)

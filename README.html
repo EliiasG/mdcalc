@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>MDCalc</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="mdcalc">MDCalc</h1>
+<p>A language made to have mathmatical expressions automatically be converted to a list of calculations. (for the exam where the calculations must be explained)</p>
+<h1 id="docs">Docs</h1>
+<h2 id="syntax">Syntax</h2>
+<p>MDCalc renders instructions line by line, starting in 1.mdc, then 2.mdc, 3.mdc and so on.<br>
+Every n.mdc defines a solution for problem n (so 1.mdc for problem 1).<br>
+Every line must start with an instruction character.</p>
+<h3 id="instruction-syntax">Instruction Syntax</h3>
+<table>
+<thead>
+<tr>
+<th>Instruction</th>
+<th>function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>|</td>
+<td>Starts a new subproblem, anything before the first of these will not be rendered</td>
+</tr>
+<tr>
+<td>T [text]</td>
+<td>Renders text</td>
+</tr>
+<tr>
+<td>C [expr]</td>
+<td>Evaluates and renders expression, can be used before | to init variables</td>
+</tr>
+<tr>
+<td>I [image name]</td>
+<td>Renders an image</td>
+</tr>
+</tbody>
+</table>
+<h3 id="expression-syntax">Expression Syntax</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Syntax</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Literal</td>
+<td><em>{number}</em> or <em>{varname}</em></td>
+<td>Represents a literal (already known) number.</td>
+</tr>
+<tr>
+<td>Variable Setter</td>
+<td><em>({varname} = {expr})</em></td>
+<td>Sets a variable for use in later expressions and returns the result of the expression, variables also store their unit.</td>
+</tr>
+<tr>
+<td>Comment</td>
+<td><em>({expr}:{text})</em> or <em>({expr}:{int}:{text})</em></td>
+<td>Renders comment after expression, and optionally sets how many decimals should be rendered. Comments will split a calculation into multiple lines, unless the resulting line will be &quot;literal = literal&quot; (this is so precision can be set without an extra line).</td>
+</tr>
+<tr>
+<td>Unit override</td>
+<td><em>{number}{unit}</em> or <em>({expr}){unit}</em> (can be used after function)</td>
+<td>Overrides unit of expression result or literal, when formatted literals will display their units, and the result will display its unit. When compiling MDCalc will ask for unit display names.</td>
+</tr>
+<tr>
+<td>Operator</td>
+<td><em>{expr}{op}{expr}</em></td>
+<td>Applies operator to expressions. When compiling MDCalc will ask for the resulting unit of applying operators to units.</td>
+</tr>
+<tr>
+<td>Function</td>
+<td><em>{function}({expr}, {expr}, ...)</em></td>
+<td>Applies function to expression(s), resulting unit will always be None.</td>
+</tr>
+</tbody>
+</table>
+<p><em>note: it is not necessary to add parathesis around an entire calculation or function parameter for comments and var setters</em></p>
+<h3 id="operators">Operators</h3>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*</td>
+<td>Multiply</td>
+</tr>
+<tr>
+<td>/</td>
+<td>Divide with fraction line</td>
+</tr>
+<tr>
+<td>%</td>
+<td>Also divides, just formats without fraction line, for mod use the function</td>
+</tr>
+<tr>
+<td>^</td>
+<td>Power</td>
+</tr>
+<tr>
+<td>+</td>
+<td>Addition</td>
+</tr>
+<tr>
+<td>-</td>
+<td>Subtraction</td>
+</tr>
+</tbody>
+</table>
+<h3 id="functions">Functions</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pi()</td>
+<td>Always returns pi</td>
+</tr>
+<tr>
+<td>e()</td>
+<td>Always returns e</td>
+</tr>
+<tr>
+<td>par(x)</td>
+<td>Adds parenthesis around formatted output, use in case MDCalc fails to add them</td>
+</tr>
+<tr>
+<td>floor(x)</td>
+<td></td>
+</tr>
+<tr>
+<td>ceil(x)</td>
+<td></td>
+</tr>
+<tr>
+<td>abs(x)</td>
+<td></td>
+</tr>
+<tr>
+<td>sqrt(x)</td>
+<td></td>
+</tr>
+<tr>
+<td>root(r, x)</td>
+<td></td>
+</tr>
+<tr>
+<td>log10(x)</td>
+<td></td>
+</tr>
+<tr>
+<td>log(b, x)</td>
+<td></td>
+</tr>
+<tr>
+<td>sin(x)</td>
+<td></td>
+</tr>
+<tr>
+<td>cos(x)</td>
+<td></td>
+</tr>
+<tr>
+<td>tan(x)</td>
+<td></td>
+</tr>
+<tr>
+<td>asin(x)</td>
+<td></td>
+</tr>
+<tr>
+<td>acos(x)</td>
+<td></td>
+</tr>
+<tr>
+<td>mod(a, b)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+            
+            
+        </body>
+        </html>
